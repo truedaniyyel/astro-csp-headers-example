@@ -3,10 +3,23 @@
 This project showes how to implement Content Security Policy (CSP) headers in
 Astro projects.
 
-## 🌟 Features
+**Features:**
 
 - CSP header implementation
 - Custom script for SRI (scripts/generate-csp-header.mjs)
+
+## 📋 Table of Contents
+
+- [Project Structure](#-project-structure)
+- [Configuration](#️-configuration)
+  - [Cloudflare Caveats](#cloudflare-caveats)
+  - [Basic CSP Setup](#basic-csp-setup)
+  - [Script for SRI](#script-for-sri)
+- [CSP Directives Reference](#-csp-directives-reference)
+  - [Common Directives](#common-directives)
+  - [Secure Values](#secure-values)
+- [Usage](#-usage)
+- [Security Testing](#-security-testing)
 
 ## 🚀 Project Structure
 
@@ -17,6 +30,41 @@ scripts/
 ```
 
 ## ⚙️ Configuration
+
+We use (Astro Shield)[https://github.com/kindspells/astro-shield] for CSP
+configuration. This project is designed to work on Cloudflare. If you want to
+use it with Vercel or Netlify, simply delete the `scripts` folder and follow the
+Astro Shield guide.
+
+### Cloudflare Caveats
+
+There are some caveats when using Cloudflare. We add hashes using Astro Shield,
+which generates them in src/generated/sriHashes.mjs. It's preferable to add this
+file to .gitignore, as it doesn’t need to be committed. However, in this
+project, it’s included for demonstration purposes.
+
+The script scripts/generate-csp-header.mjs collects inline scripts and styles,
+adds them to the CSP header along with other necessary configurations, and
+writes them to `_headers` after build time.
+
+Cloudflare currently has a 2000-character limit for `_headers`. (See more
+information
+here)[https://developers.cloudflare.com/pages/configuration/headers/]. If you
+exceed this limit, note that Cloudflare concatenates headers using a comma (,),
+while CSP uses a semicolon (;), which prevents splitting. Netlify does not have
+this issue, so if your CSP exceeds 2000 characters, consider using Netlify or
+Cloudflare Functions to handle it.
+
+Additionally, you need to add it to your package scripts:
+
+```json
+"postbuild": "node scripts/generate-csp-header.mjs"
+```
+
+On Cloudflare, this may not execute as expected during the build process.
+Instead, use the following build command:
+
+`pnpm run build && node scripts/generate-csp-header.mjs`
 
 ### Basic CSP Setup
 
