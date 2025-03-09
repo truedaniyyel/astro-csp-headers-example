@@ -31,7 +31,7 @@ scripts/
 
 ## ⚙️ Configuration
 
-We use (Astro Shield)[https://github.com/kindspells/astro-shield] for CSP
+We use [Astro Shield](https://github.com/kindspells/astro-shield) for CSP
 configuration. This project is designed to work on Cloudflare. If you want to
 use it with Vercel or Netlify, simply delete the `scripts` folder and follow the
 Astro Shield guide.
@@ -47,13 +47,12 @@ The script scripts/generate-csp-header.mjs collects inline scripts and styles,
 adds them to the CSP header along with other necessary configurations, and
 writes them to `_headers` after build time.
 
-Cloudflare currently has a 2000-character limit for `_headers`. (See more
-information
-here)[https://developers.cloudflare.com/pages/configuration/headers/]. If you
-exceed this limit, note that Cloudflare concatenates headers using a comma (,),
-while CSP uses a semicolon (;), which prevents splitting. Netlify does not have
-this issue, so if your CSP exceeds 2000 characters, consider using Netlify or
-Cloudflare Functions to handle it.
+Cloudflare currently has a 2000-character limit for `_headers`.
+[See more information here](https://developers.cloudflare.com/pages/configuration/headers/).
+If you exceed this limit, note that Cloudflare concatenates headers using a
+comma (,), while CSP uses a semicolon (;), which prevents splitting. Netlify
+does not have this issue, so if your CSP exceeds 2000 characters, consider using
+Netlify or Cloudflare Functions to handle it.
 
 Additionally, you need to add it to your package scripts:
 
