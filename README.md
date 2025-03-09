@@ -25,8 +25,9 @@ Astro projects.
 
 ```
 scripts/
-└── generate-csp-header.mjs # script for SRI
-
+├── generate-csp-header.mjs
+src/
+└── sriHashes.mjs
 ```
 
 ## ⚙️ Configuration
