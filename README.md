@@ -40,20 +40,20 @@ Astro Shield guide.
 ### Cloudflare Caveats
 
 There are some caveats when using Cloudflare. We add hashes using Astro Shield,
-which generates them in src/generated/sriHashes.mjs. It's preferable to add this
-file to .gitignore, as it doesn’t need to be committed. However, in this
+which generates them in `src/generated/sriHashes.mjs.` It's preferable to add
+this file to `.gitignore`, as it doesn’t need to be committed. However, in this
 project, it’s included for demonstration purposes.
 
-The script scripts/generate-csp-header.mjs collects inline scripts and styles,
+The script `scripts/generate-csp-header.mjs` collects inline scripts and styles,
 adds them to the CSP header along with other necessary configurations, and
 writes them to `_headers` after build time.
 
-Cloudflare currently has a 2000-character limit for `_headers`.
-[See more information here](https://developers.cloudflare.com/pages/configuration/headers/).
+Cloudflare currently has a 2000-character limit for `_headers`,
+[see more information here](https://developers.cloudflare.com/pages/configuration/headers/).
 If you exceed this limit, note that Cloudflare concatenates headers using a
-comma (,), while CSP uses a semicolon (;), which prevents splitting. Netlify
-does not have this issue, so if your CSP exceeds 2000 characters, consider using
-Netlify or Cloudflare Functions to handle it.
+comma `( , )`, while CSP uses a semicolon `( ; )`, which prevents splitting.
+Netlify does not have this issue, so if your CSP exceeds 2000 characters,
+consider using Netlify or Cloudflare Functions to handle it.
 
 Additionally, you need to add it to your package scripts:
 
@@ -89,11 +89,8 @@ In `scripts/generate-csp-header.mjs`:
 import fs from 'fs/promises';
 import path from 'path';
 import {
-  perResourceSriHashes,
   inlineScriptHashes,
   inlineStyleHashes,
-  extScriptHashes,
-  extStyleHashes,
 } from '../src/generated/sriHashes.mjs';
 
 const headersPath = path.join(process.cwd(), 'dist', '_headers');
@@ -101,18 +98,10 @@ const headersPath = path.join(process.cwd(), 'dist', '_headers');
 async function generateCSPHeader() {
   try {
     // Combine all script hashes
-    const scriptHashes = new Set([
-      ...inlineScriptHashes,
-      ...extScriptHashes,
-      ...Object.values(perResourceSriHashes.scripts),
-    ]);
+    const scriptHashes = new Set([...inlineScriptHashes]);
 
     // Combine all style hashes
-    const styleHashes = new Set([
-      ...inlineStyleHashes,
-      ...extStyleHashes,
-      ...Object.values(perResourceSriHashes.styles),
-    ]);
+    const styleHashes = new Set([...inlineStyleHashes]);
 
     // Generate CSP header
     const cspHeader =
@@ -170,9 +159,10 @@ generateCSPHeader();
 
 1. Clone this repository
 2. Install dependencies: `pnpm install`
-3. Configure CSP directives in `src/utils/security/csp.ts`
+3. Configure CSP directives in `public/_headers` and
+   `scripts/generate-csp-header.mjs`
 4. Run `pnpm dev` to start development server
-5. Run `pnpm build` to build your secure site
+5. Run `pnpm build` to build your site
 
 ## 🔍 Security Testing
 
