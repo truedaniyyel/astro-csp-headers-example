@@ -8,7 +8,7 @@ Astro projects.
 - CSP header implementation
 - Custom script for SRI (scripts/generate-csp-header.mjs)
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Project Structure](#-project-structure)
 - [Configuration](#️-configuration)
@@ -21,7 +21,7 @@ Astro projects.
 - [Usage](#-usage)
 - [Security Testing](#-security-testing)
 
-## 🚀 Project Structure
+## Project Structure
 
 ```
 scripts/
@@ -134,7 +134,7 @@ async function generateCSPHeader() {
 generateCSPHeader();
 ```
 
-## 📝 CSP Directives Reference
+## CSP Directives Reference
 
 ### Common Directives
 
@@ -155,7 +155,7 @@ generateCSPHeader();
 - `'strict-dynamic'`: Enable trust propagation for scripts
 - `'nonce-{NONCE}'`: Allow resources with matching nonce
 
-## 📚 Usage
+## Usage
 
 1. Clone this repository
 2. Install dependencies: `pnpm install`
@@ -164,7 +164,7 @@ generateCSPHeader();
 4. Run `pnpm dev` to start development server
 5. Run `pnpm build` to build your site
 
-## 🔍 Security Testing
+## Security Testing
 
 Verify your CSP implementation using:
 
