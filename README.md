@@ -30,7 +30,7 @@ src/
 └── sriHashes.mjs
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 We use [Astro Shield](https://github.com/kindspells/astro-shield) for CSP
 configuration. This project is designed to work on Cloudflare. If you want to
